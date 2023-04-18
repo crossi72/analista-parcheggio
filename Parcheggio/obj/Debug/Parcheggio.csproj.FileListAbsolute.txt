@@ -1,0 +1,40 @@
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.AssemblyReference.cache
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.SuggestedBindingRedirects.cache
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\bin\Debug\Parcheggio.exe.config
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\bin\Debug\Parcheggio.exe
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\bin\Debug\Parcheggio.pdb
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\obj\Debug\Parcheggio.exe
+C:\Users\corso\source\repos\Parcheggio\Parcheggio\obj\Debug\Parcheggio.pdb
+D:\C#\Parcheggio\Parcheggio\bin\Debug\Parcheggio.exe.config
+D:\C#\Parcheggio\Parcheggio\bin\Debug\Parcheggio.exe
+D:\C#\Parcheggio\Parcheggio\bin\Debug\Parcheggio.pdb
+D:\C#\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.AssemblyReference.cache
+D:\C#\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.SuggestedBindingRedirects.cache
+D:\C#\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
+D:\C#\Parcheggio\Parcheggio\obj\Debug\Parcheggio.exe
+D:\C#\Parcheggio\Parcheggio\obj\Debug\Parcheggio.pdb
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.AssemblyReference.cache
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.SuggestedBindingRedirects.cache
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\obj\Debug\Parcheggio.exe
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\obj\Debug\Parcheggio.pdb
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\bin\Debug\Parcheggio.exe.config
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\bin\Debug\Parcheggio.exe
+C:\Users\Tommy\Desktop\Parcheggio\Parcheggio\bin\Debug\Parcheggio.pdb
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\bin\Debug\Parcheggio.exe.config
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\bin\Debug\Parcheggio.exe
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\bin\Debug\Parcheggio.pdb
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.csproj.AssemblyReference.cache
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.csproj.SuggestedBindingRedirects.cache
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.exe
+C:\Users\Tommy\Desktop\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.pdb
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\bin\Debug\Parcheggio.exe.config
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\bin\Debug\Parcheggio.exe
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\bin\Debug\Parcheggio.pdb
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.csproj.AssemblyReference.cache
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.csproj.SuggestedBindingRedirects.cache
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.exe
+C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.pdb
