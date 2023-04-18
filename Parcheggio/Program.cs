@@ -31,6 +31,7 @@ namespace Parcheggio
                     bool trovato = false;
                     foreach (Veicolo veicolo in veicoli)
                     {
+                        
                         if (veicolo.targa != null && veicolo.targa.ToLower() == targa)
                         {
                             Console.WriteLine($"Il veicolo con targa {veicolo.targa} è già presente nel parcheggio.");
@@ -38,7 +39,11 @@ namespace Parcheggio
                             break;
                         }
                     }
-
+                    if (targa == "")
+                    {
+                        trovato = true;
+                        Console.Write("Non hai inserito nessuna targa");
+                    }
                     if (!trovato)
                     {
                         DateTime arrivo = DateTime.Now;
@@ -76,11 +81,11 @@ namespace Parcheggio
                         {
                             break;
                         }
-
-                        if (veicolo.targa != null && veicolo.targa.ToLower().Contains(targa))
+                        
+                        if (veicolo.targa != null && veicolo.targa.ToLower() == targa)
                         {
                             double tariffa = veicolo.Tempoparcheggio();
-                            Console.WriteLine($"Il veicolo con targa {veicolo.targa} è uscito il {veicolo.uscita.Date.ToString("dd/MM/yyyy")} alle ore {veicolo.uscita.ToString("HH:mm")} e deve pagare {tariffa} euro");
+                            Console.WriteLine($"Il veicolo con targa {veicolo.targa} esce il {veicolo.uscita.Date.ToString("dd/MM/yyyy")} alle ore {veicolo.uscita.ToString("HH:mm")} e deve pagare {tariffa} euro");
                             veicolo.targa = null;
                             veicoloTrovato = true;
                             break;
