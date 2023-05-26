@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
@@ -16,37 +17,95 @@ namespace Parcheggio
 	{
 
 		/// <summary>
-		/// Loads data from database
+		/// Create a connection to database
 		/// </summary>
-		/// <param name="tableName">Name of the table</param>
-		/// <returns>Datatable containing data from <paramref name="tableName"/>table</returns>
-		static public DataTable GetDataFromDB(string tableName)
+		/// <returns></returns>
+		static private SqlConnection GetDBConnection(){
+			string connectionString;
+			SqlConnection connection;
+
+			//variables iniatialization
+			connectionString = "Data Source=localhost;Initial Catalog=parcheggio;Integrated Security=True";
+			
+			//create connection to database
+			connection = new SqlConnection(connectionString);
+
+			//return connection to caller
+			return connection;
+		}
+
+		/// <summary>
+		/// Inserisce un veicolo nel parcheggio
+		/// </summary>
+		/// <param name="targa">targa del veicolo da inserire</param>
+		static private void InsertCar(string targa){
+				//variables declaration
+				string queryString;
+				SqlConnection connection;
+				SqlCommand command;
+
+				//variables iniatialization
+				queryString = $"INSERT INTO veicoli (targa, ingresso) VALUES ('{targa}', GETDATE())";
+
+				using (connection = GetDBConnection())
+				{
+					command = new SqlCommand(queryString, connection);
+					connection.Open();
+					command.ExecuteNonQuery();
+				}
+			}
+
+			/// <summary>
+			/// Loads data from database
+			/// </summary>
+			/// <param name="tableName">Name of the table</param>
+			/// <returns>Datatable containing data from <paramref name="tableName"/>table</returns>
+			static private DataTable GetDataFromDB(string tableName)
 		{
 			//variables declaration
-			string connectionString;
 			string queryString;
 			SqlConnection connection;
 			SqlDataAdapter adapter;
 			DataTable resultTable;
 
 			//variables iniatialization
-			connectionString = "Data Source=localhost;Initial Catalog=parcheggio;Integrated Security=True";	
 			queryString = $"SELECT * FROM {tableName}";
 
-			using (connection = new SqlConnection(connectionString))
+			using (connection = GetDBConnection())
 			{
 				adapter = new SqlDataAdapter(queryString, connection);
 
 				resultTable = new DataTable();
 				adapter.Fill(resultTable);
 				return resultTable;
-
-				//foreach (DataRow row in clientiTable.Rows)
-				//{
-				//	Console.WriteLine(row["Nome"] + " " + row["Cognome"]);
-				//}
 			}
 		}
+		
+		/// <summary>
+		/// Loads data from database
+		/// </summary>
+		/// <param name="tableName">Name of the table</param>
+		/// <returns>Datatable containing data from <paramref name="tableName"/>table</returns>
+		static private DataTable GetCarsIntoParking()
+		{
+			//variables declaration
+			string queryString;
+			SqlConnection connection;
+			SqlDataAdapter adapter;
+			DataTable resultTable;
+
+			//variables iniatialization
+			queryString = $"SELECT * FROM veicoli WHERE uscita IS NULL";
+
+			using (connection = GetDBConnection())
+			{
+				adapter = new SqlDataAdapter(queryString, connection);
+
+				resultTable = new DataTable();
+				adapter.Fill(resultTable);
+				return resultTable;
+            }
+        }
 
 		/// <summary>
 		/// Search a car
@@ -56,17 +115,15 @@ namespace Parcheggio
 		static public bool SearchCar(string targa)
 		{
 			//variables declaration
-			string connectionString;
-			string queryString;
+			string queryString; 
 			SqlConnection connection;
 			SqlDataAdapter adapter;
 			DataTable resultTable;
 
 			//variables iniatialization
-			connectionString = "Data Source=localhost;Initial Catalog=parcheggio;Integrated Security=True";	
 			queryString = $"SELECT * FROM veicoli where targa='{targa}' and uscita is null";
 
-			using (connection = new SqlConnection(connectionString))
+			using (connection = GetDBConnection())
 			{
 				adapter = new SqlDataAdapter(queryString, connection);
 
@@ -84,8 +141,7 @@ namespace Parcheggio
 			}
 		}
 
-		static void Main(string[] args)
-		{
+		static void Main(string[] args){
 			DataTable parkingTable;
 			float costoOrario;
 			int posti;
@@ -107,23 +163,12 @@ namespace Parcheggio
 
 				if (scelta == "1")
 				{
-					ArrivoVeicoli(veicoli);
+					ArrivoVeicoli();
 				}
 
 				if (scelta == "2")
 				{
-					Console.WriteLine($"I veicoli presenti nel parcheggio sono:");
-					bool controllo = false;
-					foreach (Veicolo veicolo in veicoli)
-					{
-						if (veicolo.targa != null)
-						{
-							Console.WriteLine(veicolo.getInfoVeicolo());
-							controllo = true;
-						}
-					}
-					if (!controllo) Console.WriteLine("0");
-					Console.ReadLine();
+					Print();
 				}
 
 				if (scelta == "3")
@@ -162,29 +207,52 @@ namespace Parcheggio
 				}
 			}
 		}
-		private static void ArrivoVeicoli(List<Veicolo> veicoli)
+
+		/// <summary>
+		/// Stampa i veicoli presenti nel parcheggio
+		/// </summary>
+		private static void Print()
+		{
+			DataTable cars;
+
+			Console.WriteLine($"I veicoli presenti nel parcheggio sono:");
+
+			cars = GetCarsIntoParking();
+
+			foreach (DataRow row in cars.Rows){
+				Console.WriteLine(row["targa"] + " " + row["ingresso"] + "\n");
+			}
+
+		Console.ReadLine();
+		}
+
+		private static void ArrivoVeicoli()
 		{
 			Console.Write("Inserire targa veicolo: ");
 			string targa = Console.ReadLine().ToLower();
 			bool trovato;
 
-			if (SearchCar(targa))
-			{
-				Console.WriteLine($"Il veicolo con targa {targa} è già presente nel parcheggio.");
-				trovato = true;
-			} else {
-				trovato = false;
-			}
-
 			if (targa == "")
 			{
+				//l'utente non ha inserito la targa
 				trovato = true;
 				Console.Write("Non hai inserito nessuna targa");
 			}
+			else {
+				//l'utente ha inserito la targa: cerco il veicolo
+				if (SearchCar(targa))
+				{
+					Console.WriteLine($"Il veicolo con targa {targa} è già presente nel parcheggio.");
+					trovato = true;
+				} else {
+					trovato = false;
+				}
+			}
+
 			if (!trovato)
 			{
-				DateTime arrivo = DateTime.Now;
-				veicoli.Add(new Veicolo(targa, arrivo));
+				//Il veicolo non è nel parcheggio: lo inserisco
+				InsertCar(targa);
 				Console.WriteLine($"Il veicolo con targa {targa} è stato aggiunto alla lista dei veicoli presenti nel parcheggio");
 			}
 			Console.ReadLine();
