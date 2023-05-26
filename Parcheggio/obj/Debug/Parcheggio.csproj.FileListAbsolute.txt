@@ -38,3 +38,11 @@ C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parch
 C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
 C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.exe
 C:\Users\Tommy\Desktop\Babbone\Parcheggio Marco GRECO\Parcheggio\obj\Debug\Parcheggio.pdb
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\bin\Debug\Parcheggio.exe.config
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\bin\Debug\Parcheggio.exe
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\bin\Debug\Parcheggio.pdb
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.AssemblyReference.cache
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.SuggestedBindingRedirects.cache
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.exe
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.pdb
