@@ -46,3 +46,6 @@ C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.cspro
 C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.CoreCompileInputs.cache
 C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.exe
 C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.pdb
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\bin\Debug\System.Data.SqlClient.dll
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\bin\Debug\System.Data.SqlClient.xml
+C:\Users\cross\Desktop\analista-parcheggio\Parcheggio\obj\Debug\Parcheggio.csproj.CopyComplete

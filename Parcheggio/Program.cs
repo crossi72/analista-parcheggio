@@ -1,26 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Parcheggio
-{
-	internal class Program
+{	public class Program
 	{
 
 		/// <summary>
 		/// Create a connection to database
 		/// </summary>
 		/// <returns></returns>
-		static private SqlConnection GetDBConnection(){
+		static public SqlConnection GetDBConnection(){
 			string connectionString;
 			SqlConnection connection;
 
@@ -122,9 +112,9 @@ namespace Parcheggio
 		/// <summary>
 		/// Carica l'orario di ingresso di un veicolo
 		/// </summary>
-		/// <param name="targa">targa del veicolo da cercaer</param>
+		/// <param name="targa">targa del veicolo da cercare</param>
 		/// <returns>La DataTable contenente le informazioni sull'ingresso del veicolo</returns>
-		static private DataTable CarEntryTime(string targa)
+		static public DataTable CarEntryTime(string targa)
 		{
 			//variables declaration
 			string queryString;
