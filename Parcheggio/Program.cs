@@ -140,7 +140,7 @@ namespace Parcheggio
 		/// Indica se ci sono posti liberi
 		/// </summary>
 		/// <returns>La DataTable contenente le informazioni sull'ingresso del veicolo</returns>
-		static private bool FreePlaces(int postiTotali)
+		static public bool FreePlaces(int postiTotali)
 		{
 			//variables declaration
 			string queryString;
