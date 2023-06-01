@@ -94,7 +94,7 @@
 			this.Controls.Add(this.btnArrivoVeicolo);
 			this.Controls.Add(this.txtInput);
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "Gestione parcheggio";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

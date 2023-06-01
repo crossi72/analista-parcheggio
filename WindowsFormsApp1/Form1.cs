@@ -1,22 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
 	public partial class Form1 : Form
 	{
-		public Form1()
-		{
-			InitializeComponent();
-		}
+
+		#region " proprietà private "
+
+		//proprietà per la gestione dei dati statici
+		private int postiTotali;
+		private float costoOrario;
+
+		#endregion
+
+		#region " gestori di evento "
 
 		private void button1_Click(object sender, EventArgs e)
 		{
@@ -25,7 +26,7 @@ namespace WindowsFormsApp1
 
 		private void btnArrivoVeicolo_Click(object sender, EventArgs e)
 		{
-			this.ArrivoVeicoli(10);
+			this.ArrivoVeicoli();
 		}
 
 		private void btnStampaVeicoli_Click(object sender, EventArgs e)
@@ -35,14 +36,34 @@ namespace WindowsFormsApp1
 
 		private void btnUscitaVeicolo_Click(object sender, EventArgs e)
 		{
+			this.UscitaVeicolo();
+		}
 
+		#endregion
+
+		public Form1() {
+			InitializeComponent();
+
+			//valorizzo le proprietà private
+			InitProperties();
+		}
+
+		private void InitProperties(){
+			DataTable parkTable;
+
+			//leggo i dati dal database
+			parkTable = GetDataFromDB("parcheggio");
+
+			//assegno i valori alle propreità
+			this.postiTotali = Convert.ToInt32(parkTable.Rows[0]["posti"]);
+			this.costoOrario = Convert.ToSingle(parkTable.Rows[0]["costo_orario"]);
 		}
 
 		/// <summary>
 		/// Create a connection to database
 		/// </summary>
 		/// <returns></returns>
-		static public SqlConnection GetDBConnection()
+		public SqlConnection GetDBConnection()
 		{
 			string connectionString;
 			SqlConnection connection;
@@ -57,7 +78,7 @@ namespace WindowsFormsApp1
 			return connection;
 		}
 
-		static private void ExecuteQuery(string query)
+		private void ExecuteQuery(string query)
 		{
 			//variables declaration
 			string queryString;
@@ -74,12 +95,12 @@ namespace WindowsFormsApp1
 				command.ExecuteNonQuery();
 			}
 		}
-
+		
 		/// <summary>
 		/// Inserisce un veicolo nel parcheggio
 		/// </summary>
 		/// <param name="targa">targa del veicolo da inserire</param>
-		static private void InsertCar(string targa)
+		private void InsertCar(string targa)
 		{
 			ExecuteQuery($"INSERT INTO veicoli (targa, ingresso) VALUES ('{targa}', GETDATE())");
 		}
@@ -88,7 +109,7 @@ namespace WindowsFormsApp1
 		/// Toglie un veicolo nel parcheggio
 		/// </summary>
 		/// <param name="targa">targa del veicolo da togliere</param>
-		static private void RemoveCar(string targa)
+		private void RemoveCar(string targa)
 		{
 			ExecuteQuery($"UPDATE veicoli SET uscita = GETDATE() WHERE targa = '{targa}' AND uscita IS NULL");
 		}
@@ -98,7 +119,7 @@ namespace WindowsFormsApp1
 		/// </summary>
 		/// <param name="tableName">Name of the table</param>
 		/// <returns>Datatable containing data from <paramref name="tableName"/>table</returns>
-		static private DataTable GetDataFromDB(string tableName)
+		private DataTable GetDataFromDB(string tableName)
 		{
 			//variables declaration
 			string queryString;
@@ -124,7 +145,7 @@ namespace WindowsFormsApp1
 		/// </summary>
 		/// <param name="tableName">Name of the table</param>
 		/// <returns>Datatable containing data from <paramref name="tableName"/>table</returns>
-		static private DataTable GetCarsIntoParking()
+		private DataTable GetCarsIntoParking()
 		{
 			//variables declaration
 			string queryString;
@@ -176,7 +197,7 @@ namespace WindowsFormsApp1
 		/// Indica se ci sono posti liberi
 		/// </summary>
 		/// <returns>La DataTable contenente le informazioni sull'ingresso del veicolo</returns>
-		static public bool FreePlaces(int postiTotali)
+		public bool FreePlaces(int postiTotali)
 		{
 			//variables declaration
 			string queryString;
@@ -232,11 +253,10 @@ namespace WindowsFormsApp1
 		/// Calcola il costo della sosta
 		/// </summary>
 		/// <param name="costoOrario">Costo per un'ora di sosta</param>
-		private void Exit(float costoOrario)
+		private void UscitaVeicolo()
 		{
 			//chiedo all'utente la targa del veicolo
-			Console.WriteLine("Inserire la targa del veicolo che sta uscendo:");
-			string targa = Console.ReadLine().ToLower();
+			string targa = this.txtInput.Text;
 			DataTable carData;
 			double hours, cost;
 
@@ -246,7 +266,7 @@ namespace WindowsFormsApp1
 			if (carData.Rows.Count == 0)
 			{
 				//il veicolo non è nel parcheggio
-				Console.WriteLine("Nessun veicolo trovato.");
+				this.txtOutput.Text="Nessun veicolo trovato.";
 			}
 			else
 			{
@@ -256,15 +276,13 @@ namespace WindowsFormsApp1
 				//arrotondo le ore all'intero successivo
 				hours = Math.Ceiling(hours);
 				//calcolo il costo totale
-				cost = hours * costoOrario;
+				cost = hours * this.costoOrario;
 
-				Console.WriteLine($"Il veicolo con targa {targa} esce il {DateTime.Now.Date} alle ore {DateTime.Now.TimeOfDay} e deve pagare {cost} euro");
+				this.txtOutput.Text = $"Il veicolo con targa {targa} esce il {DateTime.Now.Date} alle ore {DateTime.Now.TimeOfDay} e deve pagare {cost} euro";
 
 				//tolgo il veicolo dal parcheggio
-				RemoveCar(targa);
+				this.RemoveCar(targa);
 			}
-
-			Console.ReadLine();
 		}
 
 		/// <summary>
@@ -288,7 +306,7 @@ namespace WindowsFormsApp1
 		/// Gestisce l'ingresso di un veicolo nel parcheggio
 		/// </summary>
 		/// <param name="posti">numero di posti disponibili nel parcheggio</param>
-		private void ArrivoVeicoli(int posti)
+		private void ArrivoVeicoli()
 		{
 			string targa = this.txtInput.Text;
 			bool trovato;
@@ -316,7 +334,7 @@ namespace WindowsFormsApp1
 			if (!trovato)
 			{
 				//verifico se ci sono posti residui nel parcheggio
-				if (FreePlaces(posti))
+				if (FreePlaces(this.postiTotali))
 				{
 					//se ci sono posti, inserisco il veicolo
 					//Il veicolo non è nel parcheggio: lo inserisco
