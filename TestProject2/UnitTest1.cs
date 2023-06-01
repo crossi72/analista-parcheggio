@@ -42,9 +42,9 @@ namespace TestProject2
 		[TestMethod]
 		public void TestCarEntryTime()
 		{
-			//- se passando ab123xy come argomento il metodo restituisce una tabella vuota, il risultato è errato
-			//- se passando ab123xy come argomento il metodo restituisce una tabella con un record, il risultato è corretto
-			//- se passando aa111xx come argomento il metodo restituisce una tabella con un record, il risultato è errato
+		//- se passando ab123xy come argomento il metodo restituisce una tabella vuota, il risultato è errato
+		//- se passando ab123xy come argomento il metodo restituisce una tabella con un record, il risultato è corretto
+		//- se passando aa111xx come argomento il metodo restituisce una tabella con un record, il risultato è errato
 		if (Parcheggio.Program.CarEntryTime("ab123xy").Rows.Count == 0)
 			{
 				//risultato errato: la macchina ab123xy deve essere presente

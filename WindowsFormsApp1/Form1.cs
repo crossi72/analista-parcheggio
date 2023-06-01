@@ -1,22 +1,55 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Parcheggio
-{	public class Program
+namespace WindowsFormsApp1
+{
+	public partial class Form1 : Form
 	{
+		public Form1()
+		{
+			InitializeComponent();
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			this.txtInput.Text = "hello world!!!";
+		}
+
+		private void btnArrivoVeicolo_Click(object sender, EventArgs e)
+		{
+			this.ArrivoVeicoli(10);
+		}
+
+		private void btnStampaVeicoli_Click(object sender, EventArgs e)
+		{
+			this.StampaVeicoli();
+		}
+
+		private void btnUscitaVeicolo_Click(object sender, EventArgs e)
+		{
+
+		}
 
 		/// <summary>
 		/// Create a connection to database
 		/// </summary>
 		/// <returns></returns>
-		static public SqlConnection GetDBConnection(){
+		static public SqlConnection GetDBConnection()
+		{
 			string connectionString;
 			SqlConnection connection;
 
 			//variables iniatialization
 			connectionString = "Data Source=localhost;Initial Catalog=parcheggio;Integrated Security=True";
-			
+
 			//create connection to database
 			connection = new SqlConnection(connectionString);
 
@@ -24,7 +57,8 @@ namespace Parcheggio
 			return connection;
 		}
 
-		static private void ExecuteQuery(string query){
+		static private void ExecuteQuery(string query)
+		{
 			//variables declaration
 			string queryString;
 			SqlConnection connection;
@@ -45,24 +79,26 @@ namespace Parcheggio
 		/// Inserisce un veicolo nel parcheggio
 		/// </summary>
 		/// <param name="targa">targa del veicolo da inserire</param>
-		static private void InsertCar(string targa){
-			ExecuteQuery( $"INSERT INTO veicoli (targa, ingresso) VALUES ('{targa}', GETDATE())");
+		static private void InsertCar(string targa)
+		{
+			ExecuteQuery($"INSERT INTO veicoli (targa, ingresso) VALUES ('{targa}', GETDATE())");
 		}
 
 		/// <summary>
 		/// Toglie un veicolo nel parcheggio
 		/// </summary>
 		/// <param name="targa">targa del veicolo da togliere</param>
-		static private void RemoveCar(string targa){
+		static private void RemoveCar(string targa)
+		{
 			ExecuteQuery($"UPDATE veicoli SET uscita = GETDATE() WHERE targa = '{targa}' AND uscita IS NULL");
-			}
+		}
 
-			/// <summary>
-			/// Loads data from database
-			/// </summary>
-			/// <param name="tableName">Name of the table</param>
-			/// <returns>Datatable containing data from <paramref name="tableName"/>table</returns>
-			static private DataTable GetDataFromDB(string tableName)
+		/// <summary>
+		/// Loads data from database
+		/// </summary>
+		/// <param name="tableName">Name of the table</param>
+		/// <returns>Datatable containing data from <paramref name="tableName"/>table</returns>
+		static private DataTable GetDataFromDB(string tableName)
 		{
 			//variables declaration
 			string queryString;
@@ -82,7 +118,7 @@ namespace Parcheggio
 				return resultTable;
 			}
 		}
-		
+
 		/// <summary>
 		/// Loads data from database
 		/// </summary>
@@ -106,15 +142,15 @@ namespace Parcheggio
 				resultTable = new DataTable();
 				adapter.Fill(resultTable);
 				return resultTable;
-            }
-        }
+			}
+		}
 
 		/// <summary>
 		/// Carica l'orario di ingresso di un veicolo
 		/// </summary>
 		/// <param name="targa">targa del veicolo da cercare</param>
 		/// <returns>La DataTable contenente le informazioni sull'ingresso del veicolo con <paramref name="targa"/> indicata </returns>
-		static public DataTable CarEntryTime(string targa)
+		public DataTable CarEntryTime(string targa)
 		{
 			//variables declaration
 			string queryString;
@@ -135,7 +171,7 @@ namespace Parcheggio
 
 			return resultTable;
 		}
-		
+
 		/// <summary>
 		/// Indica se ci sono posti liberi
 		/// </summary>
@@ -159,10 +195,13 @@ namespace Parcheggio
 				resultTable = new DataTable();
 				adapter.Fill(resultTable);
 
-				if (Convert.ToInt32(resultTable.Rows[0]["postiOccupati"]) < postiTotali){
+				if (Convert.ToInt32(resultTable.Rows[0]["postiOccupati"]) < postiTotali)
+				{
 					//ci sono posti liberi
 					result = true;
-				} else{
+				}
+				else
+				{
 					//non ci sono posti liberi
 					result = false;
 				}
@@ -176,7 +215,7 @@ namespace Parcheggio
 		/// </summary>
 		/// <param name="targa">Targa dell'automobile</param>
 		/// <returns>True if <paramref name="targa"/> is in the parking</returns>
-		static public bool SearchCar(string targa)
+		public bool SearchCar(string targa)
 		{
 			if (CarEntryTime(targa).Rows.Count == 0)
 			{
@@ -188,52 +227,12 @@ namespace Parcheggio
 			}
 		}
 
-		static void Main(string[] args){
-			DataTable parkingTable;
-			float costoOrario;
-			int posti;
-
-			parkingTable = GetDataFromDB("parcheggio");
-			costoOrario = Convert.ToSingle(parkingTable.Rows[0]["costo_orario"]);
-			posti = Convert.ToInt32(parkingTable.Rows[0]["posti"]);
-
-			while (true)
-			{
-				Console.Clear();
-				Console.WriteLine("1- Arrivo nuovo veicolo");
-				Console.WriteLine("2- Stampa tutti i veicoli presenti nel parcheggio");
-				Console.WriteLine("3- Uscita veicolo presente nel parcheggio");
-				Console.WriteLine("9- Uscita");
-				string scelta = Console.ReadLine();
-
-				if (scelta == "1")
-				{
-					ArrivoVeicoli(posti);
-				}
-
-				if (scelta == "2")
-				{
-					Print();
-				}
-
-				if (scelta == "3")
-				{
-					Exit(costoOrario);
-
-				}
-				if (scelta == "9")
-				{
-					break;
-				}
-			}
-		}
-
 		/// <summary>
 		/// Toglie un veicolo dal parcheggio
 		/// Calcola il costo della sosta
 		/// </summary>
 		/// <param name="costoOrario">Costo per un'ora di sosta</param>
-		private static void Exit(float costoOrario)
+		private void Exit(float costoOrario)
 		{
 			//chiedo all'utente la targa del veicolo
 			Console.WriteLine("Inserire la targa del veicolo che sta uscendo:");
@@ -244,10 +243,13 @@ namespace Parcheggio
 			//cerco nel database il veicolo con la targa indicata
 			carData = CarEntryTime(targa);
 
-			if (carData.Rows.Count == 0){
+			if (carData.Rows.Count == 0)
+			{
 				//il veicolo non è nel parcheggio
 				Console.WriteLine("Nessun veicolo trovato.");
-			} else {
+			}
+			else
+			{
 				//il veicolo è nel parcheggio, calcolo il costo
 				//calcolo quante ore (con i decimali) è rimasto nel parcheggio
 				hours = Convert.ToSingle(carData.Rows[0]["durata"]) / 60.0;
@@ -268,44 +270,45 @@ namespace Parcheggio
 		/// <summary>
 		/// Stampa i veicoli presenti nel parcheggio
 		/// </summary>
-		private static void Print()
+		private void StampaVeicoli()
 		{
 			DataTable cars;
 
-			Console.WriteLine($"I veicoli presenti nel parcheggio sono:");
+			this.txtOutput.Text = $"I veicoli presenti nel parcheggio sono:\r\n";
 
 			cars = GetCarsIntoParking();
 
-			foreach (DataRow row in cars.Rows){
-				Console.WriteLine(row["targa"] + " " + row["ingresso"] + "\n");
+			foreach (DataRow row in cars.Rows)
+			{
+				this.txtOutput.Text += row["targa"] + " " + row["ingresso"] + "\r\n";
 			}
-
-		Console.ReadLine();
 		}
 
 		/// <summary>
 		/// Gestisce l'ingresso di un veicolo nel parcheggio
 		/// </summary>
 		/// <param name="posti">numero di posti disponibili nel parcheggio</param>
-		private static void ArrivoVeicoli(int posti)
+		private void ArrivoVeicoli(int posti)
 		{
-			Console.Write("Inserire targa veicolo: ");
-			string targa = Console.ReadLine().ToLower();
+			string targa = this.txtInput.Text;
 			bool trovato;
 
 			if (targa == "")
 			{
 				//l'utente non ha inserito la targa
 				trovato = true;
-				Console.Write("Non hai inserito nessuna targa");
+				this.txtOutput.Text = "Non hai inserito nessuna targa";
 			}
-			else {
+			else
+			{
 				//l'utente ha inserito la targa: cerco il veicolo
 				if (SearchCar(targa))
 				{
-					Console.WriteLine($"Il veicolo con targa {targa} è già presente nel parcheggio.");
+					this.txtOutput.Text = $"Il veicolo con targa {targa} è già presente nel parcheggio.";
 					trovato = true;
-				} else {
+				}
+				else
+				{
 					trovato = false;
 				}
 			}
@@ -318,14 +321,15 @@ namespace Parcheggio
 					//se ci sono posti, inserisco il veicolo
 					//Il veicolo non è nel parcheggio: lo inserisco
 					InsertCar(targa);
-					Console.WriteLine($"Il veicolo con targa {targa} è stato aggiunto alla lista dei veicoli presenti nel parcheggio");
+					this.txtOutput.Text = $"Il veicolo con targa {targa} è stato aggiunto alla lista dei veicoli presenti nel parcheggio";
 				}
-				else {
+				else
+				{
 					//se non ci sono posti, avviso l'utente
-					Console.WriteLine($"Il parcheggio è pieno");
+					this.txtOutput.Text = $"Il parcheggio è pieno";
 				}
 			}
-			Console.ReadLine();
 		}
 	}
-} 
+}
+
